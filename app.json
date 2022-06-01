@@ -1,10 +1,10 @@
 {
 	"expo": {
-		"name": "Signal-clone",
+		"name": "Signal-clone-app",
 		"slug": "Signal-clone-app",
 		"version": "1.0.0",
 		"orientation": "portrait",
-		"icon": "./assets/favicon.ico",
+		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "light",
 		"splash": {
 			"image": "./assets/splash.png",
@@ -20,12 +20,12 @@
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./assets/favicon.ico",
+				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#FFFFFF"
 			}
 		},
 		"web": {
-			"favicon": "./assets/favicon.ico"
+			"favicon": "./assets/icon.png"
 		}
 	}
 }
