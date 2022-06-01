@@ -8,6 +8,7 @@ import SignUpScreen from './screens/SignUpScreen'
 import HomeScreen from './screens/HomeScreen'
 import AddChatScreen from './screens/AddChatScreen'
 import ChatScreen from './screens/ChatScreen'
+import RestPasswordScreen from './screens/RestPasswordScreen'
 import { GlobalScreenOption } from './constants'
 
 const Stack = createNativeStackNavigator()
@@ -27,6 +28,7 @@ export default function App() {
 				/>
 				<Stack.Screen name="AddChat" component={AddChatScreen} />
 				<Stack.Screen name="Home" component={HomeScreen} />
+				<Stack.Screen name="ResetPassword" component={RestPasswordScreen} />
 			</Stack.Navigator>
 			<StatusBar style="auto" />
 		</NavigationContainer>

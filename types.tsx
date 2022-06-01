@@ -29,6 +29,7 @@ export type RootTabParamList = {
 	SignUp: undefined
 	Home: undefined
 	AddChat: undefined
+	ResetPassword: undefined
 	Chat: { id: string; chatName: string }
 }
 
@@ -40,6 +41,11 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 
 // Auth
 export interface AuthLoginRequestType {
+	email: string
+	password: string
+}
+
+export interface AutRestPasswordRequestType {
 	email: string
 	password: string
 }
@@ -68,5 +74,5 @@ export type ChatRoomType = {
 		seconds?: number
 		nanoseconds?: number
 	}
-	photoURL?:string
+	photoURL?: string
 }

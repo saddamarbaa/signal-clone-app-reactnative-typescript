@@ -23,3 +23,7 @@ export const LoginSchemaValidation = Yup.object().shape({
 		.max(40, 'Password must not exceed 40 characters'),
 	acceptTerms: Yup.bool().oneOf([true], 'Accept Terms is required'),
 })
+
+export const RestPasswordSchemaValidation = Yup.object().shape({
+	email: Yup.string().required('Email is required').email('Email is invalid'),
+})

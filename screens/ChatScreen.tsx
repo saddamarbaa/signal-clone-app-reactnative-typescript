@@ -126,7 +126,7 @@ export default function ChatScreen({
 		Keyboard.dismiss() // Hide the keyboard after sending message
 
 		if (input && route?.params?.id && route?.params?.chatName) {
-			console.log(input, route?.params?.id, route?.params?.chatName)
+			console.log(input, user?.displayName, user?.photoURL)
 			try {
 				const docRef = await addDoc(
 					collection(db, 'chats', route?.params?.id, route?.params?.chatName),

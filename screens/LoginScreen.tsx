@@ -91,70 +91,69 @@ export default function LoginScreen({
 
 	return (
 		<KeyboardAvoidingView style={styles.wrapper} behavior="padding">
-			{loading ? (
-				<View>
-					<Text>Initialising User...</Text>
-				</View>
-			) : (
-				<View style={styles.container}>
-					<Image
-						source={require('../assets/Signal2.png')}
-						style={{ width: 200, height: 100 }}
-					/>
-					<View style={styles.inputContainer}>
-						<View style={styles.control}>
-							<Text style={styles.error}>{errors.email?.message}</Text>
-							<Controller
-								control={control}
-								name="email"
-								render={({ field: { onChange, value, onBlur } }) => (
-									<TextInput
-										style={errors.email ? styles.invalid : styles.input}
-										placeholder={errors.email ? '' : 'Email'}
-										value={value}
-										onBlur={onBlur}
-										onChangeText={(value) => onChange(value)}
-									/>
-								)}
-							/>
-						</View>
-						<View style={styles.control}>
-							<Text style={styles.error}>{errors.password?.message}</Text>
-							<Controller
-								control={control}
-								name="password"
-								render={({ field: { onChange, value, onBlur } }) => (
-									<TextInput
-										style={errors.password ? styles.invalid : styles.input}
-										placeholder={errors.password ? '' : 'Password'}
-										secureTextEntry
-										value={value}
-										onBlur={onBlur}
-										onChangeText={(value) => onChange(value)}
-									/>
-								)}
-							/>
-						</View>
+			<View style={styles.container}>
+				<Image
+					source={require('../assets/Signal2.png')}
+					style={{ width: 200, height: 100 }}
+				/>
+				<View style={styles.inputContainer}>
+					<View style={styles.control}>
+						<Text style={styles.error}>{errors.email?.message}</Text>
+						<Controller
+							control={control}
+							name="email"
+							render={({ field: { onChange, value, onBlur } }) => (
+								<TextInput
+									style={errors.email ? styles.invalid : styles.input}
+									placeholder={errors.email ? '' : 'Email'}
+									value={value}
+									onBlur={onBlur}
+									onChangeText={(value) => onChange(value)}
+								/>
+							)}
+						/>
 					</View>
-					<View style={styles.button}>
-						<Button title="Log In" onPress={handleSubmit(onSubmit)} />
-					</View>
-					<View style={{ width: '100%' }}>
-						<TouchableOpacity
-							style={styles.googleLogin}
-							onPress={() => signInWithGoogleHandler()}>
-							<Text style={styles.loginText}>Log in with Google</Text>
-						</TouchableOpacity>
-					</View>
-					<View>
-						<Pressable
-							style={styles.customButton}
-							onPress={() => navigation.navigate('SignUp')}>
-							<Text style={styles.text}>Create New Account?</Text>
-						</Pressable>
+					<View style={styles.control}>
+						<Text style={styles.error}>{errors.password?.message}</Text>
+						<Controller
+							control={control}
+							name="password"
+							render={({ field: { onChange, value, onBlur } }) => (
+								<TextInput
+									style={errors.password ? styles.invalid : styles.input}
+									placeholder={errors.password ? '' : 'Password'}
+									secureTextEntry
+									value={value}
+									onBlur={onBlur}
+									onChangeText={(value) => onChange(value)}
+								/>
+							)}
+						/>
 					</View>
 				</View>
-			)}
+				<View style={styles.button}>
+					<Button title="Log In" onPress={handleSubmit(onSubmit)} />
+				</View>
+				<View style={{ width: '100%' }}>
+					<TouchableOpacity
+						style={styles.googleLogin}
+						onPress={() => signInWithGoogleHandler()}>
+						<Text style={styles.loginText}>Log in with Google</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={styles.actions}>
+					<Pressable
+						style={styles.customButton}
+						onPress={() => navigation.navigate('ResetPassword')}>
+						<Text style={styles.text}>Forget Password?</Text>
+					</Pressable>
+					<Pressable
+						style={styles.customButton}
+						onPress={() => navigation.navigate('SignUp')}>
+						<Text style={styles.text}>Create New Account?</Text>
+					</Pressable>
+				</View>
+			</View>
 			{/* <View style={{ height: 100 }}></View> */}
 		</KeyboardAvoidingView>
 	)
@@ -226,7 +225,7 @@ const styles = StyleSheet.create({
 		paddingTop: 10,
 		paddingBottom: 10,
 		backgroundColor: '#D52D28',
-		borderRadius: 10,
+		borderRadius: 6,
 		borderWidth: 1,
 		borderColor: '#fff',
 	},
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingVertical: 12,
-		paddingHorizontal: 32,
+		// paddingHorizontal: 32,
 		borderRadius: 4,
 		elevation: 3,
 		// backgroundColor: 'black',
@@ -260,5 +259,11 @@ const styles = StyleSheet.create({
 		color: '#ff9700',
 		fontWeight: 'bold',
 		marginBottom: 6,
+	},
+	actions: {
+		width: '100%',
+		marginTop: 5,
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',
 	},
 })

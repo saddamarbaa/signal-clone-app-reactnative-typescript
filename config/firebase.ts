@@ -14,14 +14,14 @@ import {
 import { getFirestore } from 'firebase/firestore'
 const googleProvider = new GoogleAuthProvider()
 
-import {
-	API_KEY,
-	AUTH_DOMAIN,
-	PROJECT_ID,
-	STORAGE_BUCKET,
-	MESSAGING_SENDER_ID,
-	APP_ID,
-} from '@env'
+// import {
+// 	API_KEY,
+// 	AUTH_DOMAIN,
+// 	PROJECT_ID,
+// 	STORAGE_BUCKET,
+// 	MESSAGING_SENDER_ID,
+// 	APP_ID,
+// } from '@env'
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyDmVpIn92XJcSdaZQLPwSpfDpYVx83DKLA',

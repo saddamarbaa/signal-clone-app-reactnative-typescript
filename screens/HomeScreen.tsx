@@ -1,4 +1,10 @@
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import {
+	View,
+	StyleSheet,
+	ScrollView,
+	TouchableOpacity,
+	Text,
+} from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StackActions } from '@react-navigation/native'
@@ -18,12 +24,15 @@ import {
 import CustomListItem from '../components/CustomListItem'
 import { auth, db, signOut } from '../config/firebase'
 import { RootTabScreenProps, ChatRoomType } from '../types'
+import LoadingUI from '../components/loading'
 
 import { AntDesign, SimpleLineIcons } from '@expo/vector-icons'
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 	const [user, loading, error] = useAuthState(auth)
 	const [chatRooms, setChatRooms] = useState<ChatRoomType[] | []>([])
+
+	console.log('user', user, loading)
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
@@ -111,8 +120,13 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 		})
 	}
 
-	return (
-		<SafeAreaView style={styles.wrapper}>
+	const renderUi = () => {
+		if (loading) {
+			return <LoadingUI />
+		} else if (!user) {
+			navigation.dispatch(StackActions.replace('Login'))
+		}
+		return (
 			<ScrollView style={styles.container}>
 				{chatRooms.map(({ id, chatName, photoURL }) => (
 					<CustomListItem
@@ -124,8 +138,10 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 					/>
 				))}
 			</ScrollView>
-		</SafeAreaView>
-	)
+		)
+	}
+
+	return <SafeAreaView style={styles.wrapper}>{renderUi()}</SafeAreaView>
 }
 
 const styles = StyleSheet.create({

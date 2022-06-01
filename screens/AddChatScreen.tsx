@@ -20,7 +20,7 @@ export default function AddChatScreen({
 			headerTintColor: 'white',
 			headerTitleStyle: {
 				fontWeight: 'bold',
-				fontSize: 22,
+				fontSize: 19,
 				color: 'white',
 			},
 			headerTitleAlign: 'center',
