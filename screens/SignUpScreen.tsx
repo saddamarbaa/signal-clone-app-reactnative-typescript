@@ -48,14 +48,15 @@ export default function LoginScreen({
 				// Update Profile
 				updateProfile(user, {
 					displayName: data.name,
-					photoURL: '../assets/profile.jpg',
+					photoURL: 'https://www.mywebtuts.com/user-defualt-images.jpg',
 				})
 					.then(function () {
 						// Update successful.
 						console.log('User Profile Updated Successfully')
 						// Redirect to login
+						navigation.navigate('Login')
 					})
-					.catch(function (error) {
+					.catch(function (error: { code: any; message: any }) {
 						// An error happened.
 						const errorCode = error.code
 						const errorMessage = error.message

@@ -7,9 +7,12 @@ import {
 	Button,
 	Pressable,
 	KeyboardAvoidingView,
+	TouchableOpacity,
 } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 
+import { StackActions } from '@react-navigation/native'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -20,7 +23,7 @@ import { auth, signInWithEmailAndPassword } from '../config/firebase'
 export default function LoginScreen({
 	navigation,
 }: RootTabScreenProps<'Login'>) {
-	const user = auth.currentUser
+	const [user, loading, error] = useAuthState(auth)
 
 	console.log(user)
 	const {
@@ -33,6 +36,12 @@ export default function LoginScreen({
 		resolver: yupResolver(LoginSchemaValidation),
 	})
 
+	useEffect(() => {
+		if (user) {
+			navigation.dispatch(StackActions.replace('Home'))
+		}
+	}, [user])
+
 	const onSubmit = (data: AuthLoginRequestType) => {
 		console.log(JSON.stringify(data, null, 2))
 
@@ -42,6 +51,7 @@ export default function LoginScreen({
 				const user = userCredential.user
 				console.log(user)
 				// Redirect to the Home Screen
+				navigation.dispatch(StackActions.replace('Home'))
 			})
 			.catch((error) => {
 				const errorCode = error.code
@@ -52,57 +62,68 @@ export default function LoginScreen({
 
 	return (
 		<KeyboardAvoidingView style={styles.wrapper} behavior="padding">
-			<View style={styles.container}>
-				<Image
-					source={require('../assets/Signal2.png')}
-					style={{ width: 200, height: 100 }}
-				/>
-				<View style={styles.inputContainer}>
-					<View style={styles.control}>
-						<Text style={styles.error}>{errors.email?.message}</Text>
-						<Controller
-							control={control}
-							name="email"
-							render={({ field: { onChange, value, onBlur } }) => (
-								<TextInput
-									style={errors.email ? styles.invalid : styles.input}
-									placeholder={errors.email ? '' : 'Email'}
-									value={value}
-									onBlur={onBlur}
-									onChangeText={(value) => onChange(value)}
-								/>
-							)}
-						/>
-					</View>
-					<View style={styles.control}>
-						<Text style={styles.error}>{errors.password?.message}</Text>
-						<Controller
-							control={control}
-							name="password"
-							render={({ field: { onChange, value, onBlur } }) => (
-								<TextInput
-									style={errors.password ? styles.invalid : styles.input}
-									placeholder={errors.password ? '' : 'Password'}
-									secureTextEntry
-									value={value}
-									onBlur={onBlur}
-									onChangeText={(value) => onChange(value)}
-								/>
-							)}
-						/>
-					</View>
-				</View>
-				<View style={styles.button}>
-					<Button title="Log In" onPress={handleSubmit(onSubmit)} />
-				</View>
+			{loading ? (
 				<View>
-					<Pressable
-						style={styles.customButton}
-						onPress={() => navigation.navigate('SignUp')}>
-						<Text style={styles.text}>Create New Account?</Text>
-					</Pressable>
+					<Text>Initialising User...</Text>
 				</View>
-			</View>
+			) : (
+				<View style={styles.container}>
+					<Image
+						source={require('../assets/Signal2.png')}
+						style={{ width: 200, height: 100 }}
+					/>
+					<View style={styles.inputContainer}>
+						<View style={styles.control}>
+							<Text style={styles.error}>{errors.email?.message}</Text>
+							<Controller
+								control={control}
+								name="email"
+								render={({ field: { onChange, value, onBlur } }) => (
+									<TextInput
+										style={errors.email ? styles.invalid : styles.input}
+										placeholder={errors.email ? '' : 'Email'}
+										value={value}
+										onBlur={onBlur}
+										onChangeText={(value) => onChange(value)}
+									/>
+								)}
+							/>
+						</View>
+						<View style={styles.control}>
+							<Text style={styles.error}>{errors.password?.message}</Text>
+							<Controller
+								control={control}
+								name="password"
+								render={({ field: { onChange, value, onBlur } }) => (
+									<TextInput
+										style={errors.password ? styles.invalid : styles.input}
+										placeholder={errors.password ? '' : 'Password'}
+										secureTextEntry
+										value={value}
+										onBlur={onBlur}
+										onChangeText={(value) => onChange(value)}
+									/>
+								)}
+							/>
+						</View>
+					</View>
+					<View style={styles.button}>
+						<Button title="Log In" onPress={handleSubmit(onSubmit)} />
+					</View>
+					<View style={{ width: '100%' }}>
+						<TouchableOpacity style={styles.googleLogin}>
+							<Text style={styles.loginText}>Login</Text>
+						</TouchableOpacity>
+					</View>
+					<View>
+						<Pressable
+							style={styles.customButton}
+							onPress={() => navigation.navigate('SignUp')}>
+							<Text style={styles.text}>Create New Account?</Text>
+						</Pressable>
+					</View>
+				</View>
+			)}
 			{/* <View style={{ height: 100 }}></View> */}
 		</KeyboardAvoidingView>
 	)
@@ -167,6 +188,22 @@ const styles = StyleSheet.create({
 	button: {
 		width: '100%',
 		marginBottom: 7,
+	},
+	googleLogin: {
+		width: '100%',
+		marginTop: 10,
+		paddingTop: 10,
+		paddingBottom: 10,
+		backgroundColor: '#1E6738',
+		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: '#fff',
+	},
+	loginText: {
+		color: '#fff',
+		textAlign: 'center',
+		paddingLeft: 10,
+		paddingRight: 10,
 	},
 	customButton: {
 		alignItems: 'center',
