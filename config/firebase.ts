@@ -12,6 +12,7 @@ import {
 } from 'firebase/auth'
 
 import { getFirestore } from 'firebase/firestore'
+const googleProvider = new GoogleAuthProvider()
 
 import {
 	API_KEY,
@@ -53,6 +54,7 @@ export {
 	auth,
 	db,
 	GoogleAuthProvider,
+	googleProvider,
 	getAuth,
 	signInWithPopup,
 	signInWithEmailAndPassword,

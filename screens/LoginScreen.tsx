@@ -18,7 +18,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { LoginSchemaValidation } from '../utils'
 import { RootTabScreenProps, AuthLoginRequestType } from '../types'
-import { auth, signInWithEmailAndPassword } from '../config/firebase'
+import {
+	auth,
+	signInWithEmailAndPassword,
+	googleProvider,
+	signInWithPopup,
+	GoogleAuthProvider,
+} from '../config/firebase'
 
 export default function LoginScreen({
 	navigation,
@@ -56,6 +62,29 @@ export default function LoginScreen({
 			.catch((error) => {
 				const errorCode = error.code
 				const errorMessage = error.message
+				alert(errorMessage)
+			})
+	}
+
+	const signInWithGoogleHandler = () => {
+		signInWithPopup(auth, googleProvider)
+			.then((result) => {
+				// This gives you a Google Access Token. You can use it to access the Google API.
+				const credential = GoogleAuthProvider.credentialFromResult(result)
+				const token = credential?.accessToken
+				// The signed-in user info.
+				const user = result.user
+				navigation.dispatch(StackActions.replace('Home'))
+				// console.log(result, user)
+			})
+			.catch((error) => {
+				// Handle Errors here.
+				const errorCode = error.code
+				const errorMessage = error.message
+				// The email of the user's account used.
+				const email = error.customData.email
+				// The AuthCredential type that was used.
+				const credential = GoogleAuthProvider.credentialFromError(error)
 				alert(errorMessage)
 			})
 	}
@@ -111,8 +140,10 @@ export default function LoginScreen({
 						<Button title="Log In" onPress={handleSubmit(onSubmit)} />
 					</View>
 					<View style={{ width: '100%' }}>
-						<TouchableOpacity style={styles.googleLogin}>
-							<Text style={styles.loginText}>Login</Text>
+						<TouchableOpacity
+							style={styles.googleLogin}
+							onPress={() => signInWithGoogleHandler()}>
+							<Text style={styles.loginText}>Log in with Google</Text>
 						</TouchableOpacity>
 					</View>
 					<View>
@@ -194,7 +225,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		paddingTop: 10,
 		paddingBottom: 10,
-		backgroundColor: '#1E6738',
+		backgroundColor: '#D52D28',
 		borderRadius: 10,
 		borderWidth: 1,
 		borderColor: '#fff',
@@ -204,6 +235,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		paddingLeft: 10,
 		paddingRight: 10,
+		textTransform: 'uppercase',
 	},
 	customButton: {
 		alignItems: 'center',

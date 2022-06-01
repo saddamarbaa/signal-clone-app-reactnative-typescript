@@ -41,7 +41,11 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 					<TouchableOpacity onPress={handleLogOut} activeOpacity={0.5}>
 						<Avatar
 							rounded
-							source={user?.photoURL || require('../assets/tem3.png')}
+							source={{
+								uri:
+									user?.photoURL ||
+									'https://lh3.googleusercontent.com/a/AATXAJxviPVPdQsjwyisvBI-mHuBP7Qm5K00DuyexCGc=s96-c',
+							}}
 						/>
 					</TouchableOpacity>
 				</View>
