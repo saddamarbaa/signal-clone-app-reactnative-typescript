@@ -81,7 +81,7 @@ export default function LisTlItem({
 			/>
 			<ListItem.Content>
 				<ListItem.Title style={{ fontWeight: '800' }}>
-					{truncate(chatName, 8)}
+					{truncate(chatName, 18)}
 				</ListItem.Title>
 				{chatMessages?.length > 0 && (
 					<ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">

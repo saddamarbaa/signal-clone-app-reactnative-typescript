@@ -31,7 +31,7 @@ export default function LoginScreen({
 }: RootTabScreenProps<'Login'>) {
 	const [user, loading, error] = useAuthState(auth)
 
-	console.log(user)
+
 	const {
 		control,
 		register,
