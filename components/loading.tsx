@@ -1,8 +1,9 @@
 import { View, StyleSheet, Image } from 'react-native'
 import React from 'react'
+// @ts-ignore
 import { Circle } from 'better-react-spinkit'
 
-export default function Loading() {
+export function Loading() {
 	return (
 		<View style={styles.wrapper}>
 			<View style={[styles.card, styles.shadowProp]}>
@@ -17,6 +18,8 @@ export default function Loading() {
 		</View>
 	)
 }
+
+export default Loading
 
 const styles = StyleSheet.create({
 	wrapper: {

@@ -1,5 +1,12 @@
-export const GlobalScreenOption = {
-  headerStyle: { backgroundColor: "#3A76F0" },
-  headerTitleStyle: { color: "#fff" },
-  headerTintColor:"#fff"
+import { Dimensions } from 'react-native'
+
+const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
+
+export default {
+	window: {
+		width,
+		height,
+	},
+	isSmallDevice: width < 375,
 }
