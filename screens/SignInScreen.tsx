@@ -222,6 +222,9 @@ export function SignInScreen({ route, navigation }: SignInScreenProps) {
 						buttonTitle={"Don't have an account? Create Once"}
 						mode="flat"
 						onPress={onSignUpPress}
+						buttonTextStyle={{
+									fontSize: 15,
+								}}
 						buttonContainerStyle={[styles.buttonContainer, styles.navButton]}
 					/>
 				</Card>
